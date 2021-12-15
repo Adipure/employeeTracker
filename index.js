@@ -24,7 +24,7 @@ const createEmployee = () => {
    type: 'list',
    name: 'role',
    message: 'Pick a role for your employee',
-   choices: ['Intern', 'Engineer', 'Manager'],
+   choices: ['Sales','Sales Manager', 'Accountant', 'Account Manager' 'Engineer', 'Engineer Manager', 'Legal Team Lead'],
   }
   ])
  }
