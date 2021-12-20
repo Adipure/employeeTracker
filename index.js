@@ -6,12 +6,12 @@ const db = mysql.createConnection('mysql://root:rootroot@localhost:3306/employee
 
 
 function mainPrompts() {
- inquirer.prompt([
+  inquirer.prompt([
     {
       type: 'list',
       name: 'choice',
       message: 'What would you like to do?',
-     choices: ['View All Employees', 'View All Departments', 'View All Roles', 'Add Departments', 'Add Employee', 'Add Role', 'Update Employee Roles']
+      choices: ['View All Employees', 'View All Departments', 'View All Roles', 'Add Departments', 'Add Employee', 'Add Role', 'Update Employee Roles']
     }
   ])
     .then(({ choice }) => {
@@ -32,7 +32,10 @@ function mainPrompts() {
         case 'Add Employee':
           addEmployees()
           break;
-        case 'Update Emplyoee Roles':
+        case 'Add Role':
+          addNewrole()
+          break;
+        case 'Update Employee Roles':
           updateRole()
           break;
       }
@@ -56,7 +59,7 @@ function seeEmployees() {
 
 //VIEW Functions for ALL roles 
 function seeRoles() {
-  db.query('SELECT * FROM roles', (err, roles) => {
+  db.query('SELECT * FROM role', (err, roles) => {
     if (err) { console.log(err) }
     console.table(roles)
   })
@@ -124,7 +127,7 @@ function addNewrole() {
     },
     {
       type: 'input',
-      name: 'department_id',
+      name: 'departments_id',
       message: 'Enter Emplyoees Role ID'
     }
   ])
@@ -172,7 +175,7 @@ function updateRole() {
       },
       {
         type: 'input',
-        message: "What is the ney role for the updated employee",
+        message: "What is the new role for the updated employee",
         name: 'role_id'
       }
     ])
@@ -180,7 +183,7 @@ function updateRole() {
         db.query('UPDATE employees SET ? WHERE ?', [{ role_id: updateEmployee.role_id }, { last_name: updateEmployee.last_name }], () => {
           if (err) { console.log(err) }
           console.log('Employee Role Updated!')
-          mainPrompt()
+          mainPrompts()
         })
       })
   })
