@@ -5,14 +5,14 @@ const mysql = require('mysql2')
 const db = mysql.createConnection('mysql://root:rootroot@localhost:3306/employeeTrack_db')
 
 
-async function mainPrompts() {
-  const { choice } = await prompt([
+function mainPrompts() {
+ inquirer.prompt([
     {
       type: 'list',
       name: 'choice',
       message: 'What would you like to do?',
-      choices: ['View All Employees', 'View All Departments', 'Add Departments', 'View All Employees By Manager', 'Add Employee', 'Remove Employee', 'Update Employee Roles', 'Update Employee Manager', 'View All Roles'],
-    },
+     choices: ['View All Employees', 'View All Departments', 'View All Roles', 'Add Departments', 'Add Employee', 'Add Role', 'Update Employee Roles']
+    }
   ])
     .then(({ choice }) => {
 
@@ -31,6 +31,9 @@ async function mainPrompts() {
           break;
         case 'Add Employee':
           addEmployees()
+          break;
+        case 'Update Emplyoee Roles':
+          updateRole()
           break;
       }
 
@@ -96,6 +99,7 @@ function addEmployees() {
     }
   ])
     .then(newEmployee => {
+      console.log(newEmployee)
       db.query('INSERT INTO employees SET ?', newEmployee, err => {
         if (err) { console.log(err) }
         console.log('New Employee Added!')
@@ -125,39 +129,59 @@ function addNewrole() {
     }
   ])
     .then(newRole => {
+      console.log(newRole)
       db.query('INSERT INTO roles SET ?', newRole, err => {
         if (err) { console.log(err) }
         console.log('New Role Added!')
         mainPrompts()
       })
     })
+}
+//Functions for Add Department
 
-  //Functions for Add Department
+function addDepartment() {
+  inquirer.prompt([
+    {
+      type: 'input',
+      name: 'name',
+      message: 'Please type the New Department.'
+    }
+  ])
 
-  function addDepartment() {
+    .then(newDepartment => {
+      console.log(newDepartment)
+      db.query('INSERT INTO departments SET ?', newDepartment, err => {
+        if (err) { console.log(err) }
+        console.log('New department has been added!')
+        mainPrompts()
+      })
+    })
+}
+
+//Update Roles for Employees
+
+function updateRole() {
+  db.query('SELECT * FROM employees', (err, employees) => {
+    if (err) { console.log(err) }
+    console.table(employees)
     inquirer.prompt([
       {
         type: 'input',
-        name: 'name',
-        message: 'Please type the New Department.'
+        message: "Enter the last name of the employee that want to update",
+        name: 'last_name'
+      },
+      {
+        type: 'input',
+        message: "What is the ney role for the updated employee",
+        name: 'role_id'
       }
     ])
-
-      .then(newDepartment => {
-        console.log(newDepartment)
-        db.query('INSERT INTO departments SET ?', newDepartment, err => {
+      .then(updateEmployee => {
+        db.query('UPDATE employees SET ? WHERE ?', [{ role_id: updateEmployee.role_id }, { last_name: updateEmployee.last_name }], () => {
           if (err) { console.log(err) }
-          console.log('New department has been added!')
-          mainPrompts()
+          console.log('Employee Role Updated!')
+          mainPrompt()
         })
       })
-  }
-
-  //Update Roles for Employees
-
-  function updateRole(newRole) {
-    db.query('UPDATE employees SET ? WHERE ? ', newRole, err => {
-      if (err) { console.log(err) }
-      console.log(newRole)
-    })
-  }
+  })
+}
