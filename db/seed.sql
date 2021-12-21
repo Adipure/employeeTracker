@@ -1,4 +1,4 @@
-use employees;  
+use employeeTrack_db;  
 
 INSERT INTO departments (name) 
 
@@ -8,7 +8,8 @@ VALUES
 ('Finance'),
 ('Legal'); 
 
-INSERT INTO role (title, salary, department_id) 
+use employeeTrack_db;  
+INSERT INTO role (title, salary, departments_id) 
 VALUES 
 ('Sales Lead', 800000, 1), 
 ('Salesperson', 55000, 1), 
@@ -18,13 +19,15 @@ VALUES
 ('Accountant', 55000, 3),
 ('Legal Team Lead', 200000, 4),     
 ('Lawyer', 100000, 4); 
+
+use employeeTrack_db;  
 INSERT INTO employees (first_name, last_name, role_id, manager_id) 
 VALUES  
-('Chanwoo', 'Quil', 1, NULL),
-('Oliver', 'Hoang', 2, 1) , 
-('Mike', 'Son', 3, NULL),     
-('Abe', 'Tupak', 4, 3), 
-('Jane', 'Song', 5, NULL), 
-('Peter', 'Parker', 6, 5),  
-('Rachel', 'Meow', 7, NULL),   
-('Tom', 'Bradely', 8, 7);
+('chanwoo', 'Hwang', 1, NULL),
+('Mike', 'Big', 2, 1) , 
+('Kelvin', 'Tupak', 3, NULL),     
+('Ian', 'Suarez', 4, 3), 
+('Henry', 'Hangover', 5, NULL), 
+('Sarah', 'Anderson', 6, 5),  
+('Tom', 'Bradely', 7, NULL),   
+('Peter', 'Parker', 8, 7);

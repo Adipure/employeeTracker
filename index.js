@@ -53,6 +53,7 @@ function seeEmployees() {
   db.query('SELECT * FROM employees', (err, employees) => {
     if (err) { console.log(err) }
     console.table(employees)
+    mainPrompts()
   })
 }
 
@@ -62,6 +63,7 @@ function seeRoles() {
   db.query('SELECT * FROM role', (err, roles) => {
     if (err) { console.log(err) }
     console.table(roles)
+    mainPrompts()
   })
 }
 
@@ -72,6 +74,7 @@ function seeDepartments() {
   db.query('SELECT * FROM departments', (err, departments) => {
     if (err) { console.log(err) }
     console.table(departments)
+    mainPrompts()
   })
 }
 
