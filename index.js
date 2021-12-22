@@ -11,7 +11,7 @@ function mainPrompts() {
       type: 'list',
       name: 'choice',
       message: 'What would you like to do?',
-      choices: ['View All Employees', 'View All Departments', 'View All Roles', 'Add Departments', 'Add Employee', 'Add Role', 'Update Employee Roles']
+      choices: ['View All Employees', 'View All Departments', 'View All Roles', 'Add Departments', 'Add Employee', 'Add Role', 'Update Employee Roles', 'Quit']
     }
   ])
     .then(({ choice }) => {
@@ -38,10 +38,10 @@ function mainPrompts() {
         case 'Update Employee Roles':
           updateRole()
           break;
+        case 'Quit':
+          console.log ('Thank you, Have a nice day!')
+          break;
       }
-
-
-
     })
 
 }
@@ -131,12 +131,12 @@ function addNewrole() {
     {
       type: 'input',
       name: 'departments_id',
-      message: 'Enter Emplyoees Role ID'
+      message: 'Enter Department ID'
     }
   ])
     .then(newRole => {
       console.log(newRole)
-      db.query('INSERT INTO roles SET ?', newRole, err => {
+      db.query('INSERT INTO role SET ?', newRole, err => {
         if (err) { console.log(err) }
         console.log('New Role Added!')
         mainPrompts()
