@@ -1,4 +1,4 @@
-
+Employee Tracking App
   ---------------------------------------------------------
 ![GitHub repo size](https://img.shields.io/github/repo-size/Adipure/employeeTracker)
   ## Table of Contents
